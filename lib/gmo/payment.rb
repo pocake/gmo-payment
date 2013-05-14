@@ -1,4 +1,5 @@
 require "gmo/payment/version"
+require "gmo/payment/client"
 
 module Gmo
   module Payment
