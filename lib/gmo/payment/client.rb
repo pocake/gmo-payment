@@ -24,35 +24,35 @@ module Gmo
       # Shop API
       #
       def entry_tran(options = {})
-        @shop.entry_tran(options)
+        @shop_api.entry_tran(options)
       end
 
       def entry_tran_cvs(options = {})
-        @shop.entry_tran_cvs(options)
+        @shop_api.entry_tran_cvs(options)
       end
 
       def exec_tran(options = {})
-        @shop.exec_tran(options)
+        @shop_api.exec_tran(options)
       end
 
       def exec_tran_cvs(options = {})
-        @shop.exec_tran_cvs(options)
+        @shop_api.exec_tran_cvs(options)
       end
 
       def alter_tran(options = {})
-        @shop.alter_tran(options)
+        @shop_api.alter_tran(options)
       end
 
       def change_tran(options = {})
-        @shop.change_tran(options)
+        @shop_api.change_tran(options)
       end
 
       def search_trade(options = {})
-        @shop.search_trade(options)
+        @shop_api.search_trade(options)
       end
 
       def search_trade_multi(options = {})
-        @shop.search_trade_multi(options)
+        @shop_api.search_trade_multi(options)
       end
 
 
@@ -60,35 +60,35 @@ module Gmo
       # Site API
       #
       def save_member(options = {})
-        @site.save_member(options)
+        @site_api.save_member(options)
       end
 
       def update_member(options = {})
-        @site.update_member(options)
+        @site_api.update_member(options)
       end
 
       def delete_member(options = {})
-        @site.delete_member(options)
+        @site_api.delete_member(options)
       end
 
       def search_member(options = {})
-        @site.search_member(options)
+        @site_api.search_member(options)
       end
 
       def save_card(options = {})
-        @site.save_card(options)
+        @site_api.save_card(options)
       end
 
       def delete_card(options = {})
-        @site.delete_card(options)
+        @site_api.delete_card(options)
       end
 
       def search_card(options = {})
-        @site.search_card(options)
+        @site_api.search_card(options)
       end
 
       def exec_tran_with_saved_card(options = {})
-        @site.exec_tran(options)
+        @site_api.exec_tran(options)
       end
 
       #
