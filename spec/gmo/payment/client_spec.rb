@@ -11,6 +11,7 @@ describe Gmo::Payment::Client do
           shop_pass: 'piyo',
           host: 'foo'
         )
+        client.class.should == Gmo::Payment::Client
       end
     end
 
@@ -20,6 +21,18 @@ describe Gmo::Payment::Client do
           client = Gmo::Payment::Client.new()
         }.should raise_error
       end
+    end
+  end
+
+  context 'scenario' do
+    before(:all) do
+      @client = Gmo::Payment::Client.new(
+        site_id:   CONFIG["site_id"],
+        site_pass: CONFIG["site_pass"],
+        shop_id:   CONFIG["shop_id"],
+        shop_pass: CONFIG["shop_pass"],
+        host:      CONFIG["host"]
+      )
     end
   end
 end

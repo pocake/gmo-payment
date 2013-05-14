@@ -1,0 +1,5 @@
+shop_id:   foo
+shop_pass: bar
+site_id:   foo
+site_pass: bar
+host:      foo.example.com
