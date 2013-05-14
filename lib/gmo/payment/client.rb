@@ -3,6 +3,29 @@ require 'gmo'
 module GMO
   module Payment
     class Client
+
+      APIS = {
+        entry_tran:         :shop,
+        entry_tran_cvs:     :shop,
+        exec_tran:          :shop,
+        exec_tran_cvs:      :shop,
+        alter_tran:         :shop,
+        change_tran:        :shop,
+        search_trade:       :shop,
+        search_trade_multi: :shop,
+
+        save_member:   :site,
+        update_member: :site,
+        delete_member: :site,
+        search_member: :site,
+        save_card:     :site,
+        delete_card:   :site,
+        search_card:   :site,
+        exec_tran_with_saved_card: [:site, :exec_tran],
+
+        trade_card: :shop_and_site,
+      }
+
       def initialize(config = {})
         @site_id   = config[:site_id]
         @site_pass = config[:site_pass]
@@ -20,82 +43,34 @@ module GMO
       end
       attr_reader :site_id, :site_pass, :shop_id, :shop_pass, :host
 
-      #
-      # Shop API
-      #
-      def entry_tran(options = {})
-        @shop_api.entry_tran(options)
-      end
+      def method_missing(action, *args)
+        api_info = APIS[action]
+        return super unless action
 
-      def entry_tran_cvs(options = {})
-        @shop_api.entry_tran_cvs(options)
-      end
+        if api_info.is_a? Symbol
+          api_name   = api_info
+          api_action = action
+        elsif api_info.is_a? Array
+          api_name   = api_info[0]
+          api_action = api_info[1]
+        end
 
-      def exec_tran(options = {})
-        @shop_api.exec_tran(options)
-      end
-
-      def exec_tran_cvs(options = {})
-        @shop_api.exec_tran_cvs(options)
-      end
-
-      def alter_tran(options = {})
-        @shop_api.alter_tran(options)
-      end
-
-      def change_tran(options = {})
-        @shop_api.change_tran(options)
-      end
-
-      def search_trade(options = {})
-        @shop_api.search_trade(options)
-      end
-
-      def search_trade_multi(options = {})
-        @shop_api.search_trade_multi(options)
-      end
+        return super unless [:shop, :site, :shop_and_site].include? api_name
 
 
-      #
-      # Site API
-      #
-      def save_member(options = {})
-        @site_api.save_member(options)
-      end
+        begin
+          instance_variable_get("@#{api_name.to_s}_api").send(api_action, *args)
+        rescue Exception => e
+          error_messages = e.message.scan(/[A-Z][0-9]{8}/).map{ |error_code|
+            GMO::Payment::Const::ERROR_CODES[error_code]
+          }
 
-      def update_member(options = {})
-        @site_api.update_member(options)
-      end
+          raise e if error_messages.size == 0
 
-      def delete_member(options = {})
-        @site_api.delete_member(options)
-      end
+          detailed_error_message = e.message + "&ErrMessage=" + error_messages.join("|")
+          raise e, detailed_error_message
 
-      def search_member(options = {})
-        @site_api.search_member(options)
-      end
-
-      def save_card(options = {})
-        @site_api.save_card(options)
-      end
-
-      def delete_card(options = {})
-        @site_api.delete_card(options)
-      end
-
-      def search_card(options = {})
-        @site_api.search_card(options)
-      end
-
-      def exec_tran_with_saved_card(options = {})
-        @site_api.exec_tran(options)
-      end
-
-      #
-      # Shop and Site API
-      #
-      def trade_card(options = {})
-        @shop_and_site_api.trade_card(options)
+        end
       end
 
     end

@@ -25,15 +25,17 @@ describe GMO::Payment::Client do
   end
 
   context 'scenario' do
-    it 'save member and card, then exec payment' do
-      @client = GMO::Payment::Client.new(
+    before (:all) do
+       @client = GMO::Payment::Client.new(
         site_id:   CONFIG["site_id"],
         site_pass: CONFIG["site_pass"],
         shop_id:   CONFIG["shop_id"],
         shop_pass: CONFIG["shop_pass"],
         host:      CONFIG["host"]
       )
+    end
 
+    it 'save member and card, then exec payment' do
       order_id  = "order-#{Time.now.to_i}"
       member_id = "member-#{Time.now.to_i}"
       amount    = 99
