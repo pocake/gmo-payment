@@ -5,7 +5,7 @@ require 'gmo/payment/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "gmo-payment"
-  spec.version       = Gmo::Payment::VERSION
+  spec.version       = GMO::Payment::VERSION
   spec.authors       = ["fukayatsu"]
   spec.email         = ["fukayatsu@gmail.com"]
   spec.description   = %q{thin wrapper for gmo gem}

@@ -1,6 +1,6 @@
 require 'gmo'
 
-module Gmo
+module GMO
   module Payment
     class Client
       def initialize(config = {})

@@ -1,24 +1,24 @@
 require 'spec_helper'
 
-describe Gmo::Payment::Client do
+describe GMO::Payment::Client do
   describe '#initialize' do
     context 'valid options' do
       it 'return instance' do
-        client = Gmo::Payment::Client.new(
+        client = GMO::Payment::Client.new(
           site_id: 'hoge',
           site_pass: 'piyo',
           shop_id: 'hoge',
           shop_pass: 'piyo',
           host: 'foo'
         )
-        client.class.should == Gmo::Payment::Client
+        client.class.should == GMO::Payment::Client
       end
     end
 
     context 'invalid options' do
       it 'raise error' do
         lambda {
-          client = Gmo::Payment::Client.new()
+          client = GMO::Payment::Client.new()
         }.should raise_error
       end
     end
@@ -26,7 +26,7 @@ describe Gmo::Payment::Client do
 
   context 'scenario' do
     it 'save member and card, then exec payment' do
-      @client = Gmo::Payment::Client.new(
+      @client = GMO::Payment::Client.new(
         site_id:   CONFIG["site_id"],
         site_pass: CONFIG["site_pass"],
         shop_id:   CONFIG["shop_id"],
