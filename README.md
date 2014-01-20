@@ -1,20 +1,16 @@
 # Gmo::Payment
 
-TODO: Write a gem description
+thin wrapper for gmo gem
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
-    gem 'gmo-payment'
+    gem 'gmo-payment', github: 'pocake/gmo-payment', tag: 'v0.0.3'
 
 And then execute:
 
     $ bundle
-
-Or install it yourself as:
-
-    $ gem install gmo-payment
 
 ## Usage
 
