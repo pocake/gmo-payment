@@ -60,16 +60,13 @@ module GMO
 
         begin
           instance_variable_get("@#{api_name.to_s}_api").send(api_action, *args)
-        rescue Exception => e
+        rescue GMO::Payment::Error => e
           error_messages = e.message.scan(/[A-Z][0-9]{8}/).map{ |error_code|
             GMO::Payment::Const::ERROR_CODES[error_code]
           }
-
-          raise e if error_messages.size == 0
-
-          detailed_error_message = e.message + "&ErrMessage=" + error_messages.join("|")
-          raise e, detailed_error_message
-
+          e.error_info["ErrMessages"]  = error_messages
+          e.response_body             += "&ErrMessage=" + error_messages.join("|")
+          raise e, e.response_body
         end
       end
 
